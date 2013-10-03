@@ -7,7 +7,15 @@ function(model,data,...) {
   LPT <- parTable(fit0)
   var.idx <- which(LPT$op=="~~" & LPT$lhs==LPT$rhs)
   
+  has.tcltk <- require("tcltk")
+  if (has.tcltk) 
+    pb <- tkProgressBar("", "Inspecting case ", 0, nrow(data))
+  
   for (i in 1:nrow(data)) {
+    
+    if (has.tcltk) 
+      setTkProgressBar(pb, i, label = sprintf(paste("Inspecting case", i,"of",nrow(data))))
+    
     fit <- try(sem(model,data[-i,],...),TRUE)
     
     if (class(fit)=="try-error") {
@@ -21,5 +29,7 @@ function(model,data,...) {
       }
     }
   } 
+  
+  if (has.tcltk) close(pb)
   return(LD)
 }

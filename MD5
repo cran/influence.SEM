@@ -1,11 +1,11 @@
-30c47bc226f210c4406995b3a94f525c *DESCRIPTION
+aa5bae97cc895a2a96bfbc8e001a804c *DESCRIPTION
 8b54e5a89fbda3af5e077053d40bec76 *NAMESPACE
-f9a642781e60914b9ef8c787212513b1 *R/Deltachi.R
-c82036ea6c3d3a85973cfa5737ccdde0 *R/Likedist.R
+a71b224062feaa2f91d180a7fab4a216 *R/Deltachi.R
+67117807b147596b9ed6eaf09e69fe76 *R/Likedist.R
 8b6dbdc0f716c0f897b6d7783a9b5afb *R/explore.influence.R
-c6cb06112aca3db71e5b5403d626fcf6 *R/fitinfluence.R
-ac9162b741e7864d64bf34e1038528d2 *R/genCookDist.R
-3234e58aed7f330923526fd9dd54a776 *R/parinfluence.R
+8a6a6532db17b3687ab3e0c5a7664886 *R/fitinfluence.R
+39e68a56bfe92021eac3aed74b6fc97a *R/genCookDist.R
+5297e6240cbdb533a7de516e0c7f42f4 *R/parinfluence.R
 eee22cefb92ec730b6c864aa79d464b6 *data/PDII.rda
 3d2b0a1c55c1599390a12694c51d6dd3 *data/Q.rda
 6e1319bcea5ef35622c72b7f1c70e5ee *man/Deltachi.Rd
@@ -15,5 +15,5 @@ b53540cb76716c1dc42a0a0ec23d44e4 *man/PDII.Rd
 cea1cf392a7b818752a2a886a866ccc7 *man/explore.influence.Rd
 ee812190bf89a807b15a754e19fdd471 *man/fitinfluence.Rd
 366f5e15991fee7b3085ef752807203f *man/genCookDist.Rd
-8d293ca0e886657732007941e0942f62 *man/influence.SEM-package.Rd
-6af736aa2095535d6fe732a27b2042f2 *man/parinfluence.Rd
+0486a409845f8959b1cdadedba10d710 *man/influence.SEM-package.Rd
+74c265398603d9a520ffe583ec65262a *man/parinfluence.Rd

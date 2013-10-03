@@ -9,7 +9,7 @@ Computes direction of change in parameter estimates with \deqn{\Delta \hat{\thet
 where \eqn{\hat{\theta}_j} and \eqn{\hat{\theta}_{j(i)}} are the parameter estimates obtained from original and deleted \eqn{i} samples.
 }
 \usage{
-parinfluence(parm, model, data, ...)
+parinfluence(parm, model, data, cook = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,6 +22,9 @@ A description of the user-specified model using the lavaan model syntax. See \co
   \item{data}{
 A data frame containing the observed variables used in the model. If any variables are declared as ordered factors, this function will treat them as ordinal variables.
 }
+  \item{cook}{
+Logical, if \code{TRUE} returns generalized Cook's Distance computed as \eqn{[\Delta \hat{\theta}_{ji}]^2}.   
+}
   \item{\dots}{
 Additional parameters for \code{\link{sem}} function.
 }
@@ -31,6 +34,7 @@ Additional parameters for \code{\link{sem}} function.
 %}
 \value{
 Return a list: 
+\item{gCD }{Generalized Cook's Distance, if \code{cook=TRUE}.}
 \item{Dparm }{Direction of change in parameter estimates.}
 \item{THi }{Parameter estimates.}
 }
