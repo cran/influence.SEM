@@ -1,27 +1,18 @@
 #rm(list=ls())
 #library(lavaan)
-#main <- "~/2013_09/lavori/arcuri/berti/"
+#main <- "~/lavori/Rdevel/"
 #datadir <- paste(main,"data/",sep="")
-#source(paste(main,"Rcode/models.R",sep=""))
-#X <- foreign::read.spss(paste(datadir,"DEPURATI.sav",sep=""),to.data.frame=TRUE)
-#X <- X[-which(X$RAMOD>=4.25),]
-#X <- X[1:80,]
+#load(paste(datadir,"inluence.SEM.rda",sep=""))
+#fit0 <- sem(model, data=X, ordered=colnames(X),std.lv=TRUE)
 
-#i <- 1; modvar <- NULL
-#for (j in seq(9,54,by=9)) {
-#  item <- paste("HITi",i:j,sep="")
-#  modvar <- c(modvar,item)
-#  (i <- j+1)
-#}
-#modvar <- modvar[-c(4,13,20,27,31,38,45,51,1,9,16,24,34,41,48)]
-
-#parm <- "opposiz~~aggress"
-#model <- M03
-#data <- X
-
-#load(paste(datadir,"m03R03.rda",sep=""))
-#fit0 <- m03
-#fit0 <- sem(model,data=X)
+#data(Q,package="influence.SEM")
+#model <- "
+# F1 =~ it1+it2+it3+it4+it5+it6+it7+it8+it9+it10
+#"
+#fit0 <- sem(model, data=Q, ordered=colnames(Q))
+#i <- 29
+#parm <- "F1=~it4"
+#data <- Q[1:30,]
 
 parinfluence <-
 function(parm,model,data,cook=FALSE,...) {
@@ -33,8 +24,7 @@ function(parm,model,data,cook=FALSE,...) {
   ## tolgo le soglie e le intercette 
   ## creano problemi con i dati ordinali nel 
   ## test successivo any(fit@Fit@est[var.idx]<0))
-  (LPT <- LPT[which((LPT$op!="|")&(LPT$op!="~1")),])
-  
+  #(LPT <- LPT[which((LPT$op!="|")&(LPT$op!="~1")),])
   (var.idx <- which(LPT$op=="~~" & LPT$lhs==LPT$rhs))
   
   has.tcltk <- require("tcltk")
@@ -47,12 +37,24 @@ function(parm,model,data,cook=FALSE,...) {
       setTkProgressBar(pb, i, label = sprintf(paste("Inspecting case", i,"of",nrow(data))))
     
     fit <- try(sem(model,data[-i,],...),TRUE)
-    #fit <- try(sem(model,data[-i,]),TRUE)
+    #fit <- try(sem(model,data=Q[-i,],ordered=colnames(Q)),TRUE)
     
     if (class(fit)=="try-error") {
       Dparm <- rbind(Dparm,rep(NA,length(parm)))
       THi <- rbind(THi,rep(NA,length(parm)))
     } else {
+      
+      #cat(paste("riga ",i,":",fit@Fit@converged),"\n")
+      #cat(paste("riga ",i,":",paste(round(fit@Fit@est[var.idx],2),collapse=",")),"\n")
+      #cat(paste("riga ",i,":",length(which(is.na(fit@Fit@est[var.idx])))),"\n")
+      #if (length(which(is.na(fit@Fit@est[var.idx]))>0)) cat("ECCOLO","\n")
+      
+      if (length(which(is.na(fit@Fit@est[var.idx]))>0)) {
+        fit@Fit@est[var.idx] <- ifelse(is.na(fit@Fit@est[var.idx]),-1,fit@Fit@est[var.idx])
+        #cat(paste("modifica:",paste(round(fit@Fit@est[var.idx],2),collapse=",")),"\n")
+      }
+      #cat("    ","\n")
+      
       if ((!fit@Fit@converged)|(length(var.idx)>0L && any(fit@Fit@est[var.idx]<0))) {
         Dparm <- rbind(Dparm,rep(NA,length(parm)))
         THi <- rbind(THi,rep(NA,length(parm)))
@@ -86,4 +88,15 @@ function(parm,model,data,cook=FALSE,...) {
   
 }
 
-#PH <- parinfluence(par,Mf01k,X)
+#PH <- parinfluence(parm,model,X,ordered=colnames(X),std.lv=TRUE)
+
+#data(Q,package="influence.SEM")
+#model <- "
+# F1 =~ it1+it2+it3+it4+it5+it6+it7+it8+it9+it10
+#"
+
+#fit0 <- sem(model, data=Q, ordered=colnames(Q))
+#LY <- parinfluence("F1=~it4",model,Q[1:30,],ordered=colnames(Q))
+#LY
+
+#fit <- sem(model, data=Q[c(1:28,30),], ordered=colnames(Q))

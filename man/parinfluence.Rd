@@ -45,7 +45,7 @@ Pek, J., MacCallum, R.C. (2011). Sensitivity Analysis in Structural Equation Mod
 Massimiliano Pastore
 }
 \note{
-If for observation \eqn{i} model does not converge or yelds a solution with negative estimated variances, the associated values of \eqn{\Delta \hat{\theta}_{ji}} are set to \code{NA}. 
+If for observation \eqn{i} model does not converge or yelds a solution with negative estimated variances or NA parameter values, the associated values of \eqn{\Delta \hat{\theta}_{ji}} are set to \code{NA}. 
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
@@ -86,7 +86,7 @@ model <- "
 "
 
 # fit0 <- sem(model, data=Q, ordered=colnames(Q))
-# LY <- parinfluence("F1=~it4",model,Q)
+# LY <- parinfluence("F1=~it4",model,Q,ordered=colnames(Q))
 # explore.influence(LY$Dparm[,1])
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
