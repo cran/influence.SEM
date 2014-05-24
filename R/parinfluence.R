@@ -1,31 +1,45 @@
-#rm(list=ls())
+#rm(list=ls()); i <- 1
 #library(lavaan)
-#main <- "~/lavori/Rdevel/"
-#datadir <- paste(main,"data/",sep="")
-#load(paste(datadir,"inluence.SEM.rda",sep=""))
-#fit0 <- sem(model, data=X, ordered=colnames(X),std.lv=TRUE)
+#library(foreign)
+#data <- read.dta("~/lavori/canale/data/noMiss.dta")
+#data <- data[1:100,]
 
-#data(Q,package="influence.SEM")
-#model <- "
-# F1 =~ it1+it2+it3+it4+it5+it6+it7+it8+it9+it10
-#"
-#fit0 <- sem(model, data=Q, ordered=colnames(Q))
-#i <- 29
-#parm <- "F1=~it4"
-#data <- Q[1:30,]
+#data[,c("eta_corr","sesso","m1","m2","m3","disg1","disg2","prg1","prg2",
+#       "f1","f2","f3","f4","f5","f6","f7","f8","livelliPG","livE")] <- 
+#  lapply(data[,c("eta_corr","sesso","m1","m2","m3","disg1","disg2",
+# "prg1","prg2","f1","f2","f3","f4","f5","f6","f7","f8","livelliPG","livE")], ordered)
+
+#model <- "M=~m1+m2+m3"
+#fit0 <- sem(model, data=data)
+#inspect(fit0,"rsquare")
+#parm <- c("M=~m2","M=~m3","m2~~m2","m3~~m3")
 
 parinfluence <-
 function(parm,model,data,cook=FALSE,...) {
   fit0 <- sem(model, data, ...)
-  (th0 <- coef(fit0)[parm])
-  Dparm <- NULL; THi <- NULL
+    
+  (E <- parameterEstimates(fit0))
+  (E$parm <- paste(E$lhs,E$op,E$rhs,sep=""))
+  (th0 <- E$est[E$parm%in%parm])
   
-  (LPT <- parTable(fit0))
+  ## controllo dei parametri che non ci sono nella VCOV
+  if (sum(colnames(vcov(fit0))%in%parm)!=length(parm)) {
+    warning(paste("Dparm estimates not available for the following parameters:",
+                  paste(parm[!(parm%in%(colnames(vcov(fit0))))],collapse=", ")))
+    parmS <- parm[(colnames(vcov(fit0))%in%parm)]
+    ### ristrutturo S se parmS!=parm
+    S2 <- diag(NA,length(parm))
+    colnames(S2) <- rownames(S2) <- parm  
+  } else {
+    parmS <- parm
+  }
+  
+  Dparm <- NULL; THi <- NULL
   ## tolgo le soglie e le intercette 
   ## creano problemi con i dati ordinali nel 
   ## test successivo any(fit@Fit@est[var.idx]<0))
   #(LPT <- LPT[which((LPT$op!="|")&(LPT$op!="~1")),])
-  (var.idx <- which(LPT$op=="~~" & LPT$lhs==LPT$rhs))
+  (var.idx <- which(E$op=="~~" & E$lhs==E$rhs))
   
   has.tcltk <- require("tcltk")
   if (has.tcltk) 
@@ -37,34 +51,33 @@ function(parm,model,data,cook=FALSE,...) {
       setTkProgressBar(pb, i, label = sprintf(paste("Inspecting case", i,"of",nrow(data))))
     
     fit <- try(sem(model,data[-i,],...),TRUE)
-    #fit <- try(sem(model,data=Q[-i,],ordered=colnames(Q)),TRUE)
+    #fit <- try(sem(model,data=data[-i,]),TRUE)
     
     if (class(fit)=="try-error") {
       Dparm <- rbind(Dparm,rep(NA,length(parm)))
       THi <- rbind(THi,rep(NA,length(parm)))
     } else {
       
-      #cat(paste("riga ",i,":",fit@Fit@converged),"\n")
-      #cat(paste("riga ",i,":",paste(round(fit@Fit@est[var.idx],2),collapse=",")),"\n")
-      #cat(paste("riga ",i,":",length(which(is.na(fit@Fit@est[var.idx])))),"\n")
-      #if (length(which(is.na(fit@Fit@est[var.idx]))>0)) cat("ECCOLO","\n")
+      (LPT <- parameterEstimates(fit))
+      LPT$parm <- paste(LPT$lhs,LPT$op,LPT$rhs,sep="")
       
-      if (length(which(is.na(fit@Fit@est[var.idx]))>0)) {
-        fit@Fit@est[var.idx] <- ifelse(is.na(fit@Fit@est[var.idx]),-1,fit@Fit@est[var.idx])
-        #cat(paste("modifica:",paste(round(fit@Fit@est[var.idx],2),collapse=",")),"\n")
+      if (length(which(is.na(LPT$est[var.idx])))>0) {
+        LPT$est[var.idx] <- ifelse(is.na(LPT$est[var.idx]),-1,LPT$est[var.idx])
       }
-      #cat("    ","\n")
       
-      if ((!fit@Fit@converged)|(length(var.idx)>0L && any(fit@Fit@est[var.idx]<0))) {
+      if ((!fit@Fit@converged)|(length(var.idx)>0L && any(LPT$est[var.idx]<0))) {
         Dparm <- rbind(Dparm,rep(NA,length(parm)))
-        THi <- rbind(THi,rep(NA,length(parm)))
+        THi <- rbind(THi,LPT$est[LPT$parm%in%parm])
       } else {
-        thi <- coef(fit)[parm]; THi <- rbind(THi,thi)
-        S <- try(vcov(fit)[parm,parm],TRUE)
+        thi <- LPT$est[LPT$parm%in%parm]; THi <- rbind(THi,thi)
+        S <- try(vcov(fit)[parmS,parmS],TRUE)
         
         if (class(S)=="try-error") {
           Dparm <- rbind(Dparm,rep(NA,length(parm)))
         } else {
+          ## gestisce il caso parmS!=parm
+          S2[parmS,parmS] <- S
+          S <- S2
           if (length(parm)>1) {
             (S <- sqrt(diag(S)))  
           } else {
@@ -79,6 +92,8 @@ function(parm,model,data,cook=FALSE,...) {
   
   if (has.tcltk) close(pb)
   
+  colnames(THi) <- colnames(Dparm) <- parm
+  
   if (cook) {
     gCD <- Dparm^2
     return(list(gCD=gCD,Dparm=Dparm,THi=THi))
@@ -88,15 +103,6 @@ function(parm,model,data,cook=FALSE,...) {
   
 }
 
-#PH <- parinfluence(parm,model,X,ordered=colnames(X),std.lv=TRUE)
-
-#data(Q,package="influence.SEM")
-#model <- "
-# F1 =~ it1+it2+it3+it4+it5+it6+it7+it8+it9+it10
-#"
-
-#fit0 <- sem(model, data=Q, ordered=colnames(Q))
-#LY <- parinfluence("F1=~it4",model,Q[1:30,],ordered=colnames(Q))
-#LY
-
-#fit <- sem(model, data=Q[c(1:28,30),], ordered=colnames(Q))
+#data <- data.frame(lapply(data[,c("m1","m2","m3")],as.numeric))
+#(TH <- parinfluence(parm,model,data))
+#parinfluence(c("M=~m2","M~~M"),model,data)

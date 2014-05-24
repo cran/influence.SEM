@@ -14,10 +14,10 @@ and MacCallum (2011). It analyses models that were estimated using the function 
 \tabular{ll}{
 Package: \tab influence.SEM\cr
 Type: \tab Package\cr
-Version: \tab 1.2\cr
+Version: \tab 1.3\cr
 Depends: \tab lavaan\cr
 Suggests: \tab tcltk\cr
-Date: \tab 2013-12-30\cr
+Date: \tab 2014-05-24\cr
 License: \tab GPL (>=2)\cr
 }
 }
