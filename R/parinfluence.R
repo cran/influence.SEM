@@ -1,18 +1,11 @@
 #rm(list=ls()); i <- 1
 #library(lavaan)
-#library(foreign)
-#data <- read.dta("~/lavori/canale/data/noMiss.dta")
-#data <- data[1:100,]
-
-#data[,c("eta_corr","sesso","m1","m2","m3","disg1","disg2","prg1","prg2",
-#       "f1","f2","f3","f4","f5","f6","f7","f8","livelliPG","livE")] <- 
-#  lapply(data[,c("eta_corr","sesso","m1","m2","m3","disg1","disg2",
-# "prg1","prg2","f1","f2","f3","f4","f5","f6","f7","f8","livelliPG","livE")], ordered)
-
-#model <- "M=~m1+m2+m3"
+#load("~/lavori/proveR/influence.SEM/data/jeff.rda")
+#model <- model00
+#data <- X
 #fit0 <- sem(model, data=data)
 #inspect(fit0,"rsquare")
-#parm <- c("M=~m2","M=~m3","m2~~m2","m3~~m3")
+#parm <- PAR
 
 parinfluence <-
 function(parm,model,data,cook=FALSE,...) {
@@ -76,8 +69,10 @@ function(parm,model,data,cook=FALSE,...) {
           Dparm <- rbind(Dparm,rep(NA,length(parm)))
         } else {
           ## gestisce il caso parmS!=parm
-          S2[parmS,parmS] <- S
-          S <- S2
+          if (exists("S2")) {
+            S2[parmS,parmS] <- S
+            S <- S2            
+          }
           if (length(parm)>1) {
             (S <- sqrt(diag(S)))  
           } else {
@@ -105,4 +100,4 @@ function(parm,model,data,cook=FALSE,...) {
 
 #data <- data.frame(lapply(data[,c("m1","m2","m3")],as.numeric))
 #(TH <- parinfluence(parm,model,data))
-#parinfluence(c("M=~m2","M~~M"),model,data)
+#Mpar <- parinfluence(PAR,model,X)
