@@ -34,9 +34,9 @@ function(parm,model,data,cook=FALSE,...) {
   #(LPT <- LPT[which((LPT$op!="|")&(LPT$op!="~1")),])
   (var.idx <- which(E$op=="~~" & E$lhs==E$rhs))
   
-  has.tcltk <- require("tcltk")
+  has.tcltk <- requireNamespace("tcltk")
   if (has.tcltk) 
-    pb <- tkProgressBar("", "Inspecting case ", 0, nrow(data))
+    pb <- tkProgressBar("parinfluence", "Inspecting case ", 0, nrow(data))
     
   for (i in 1:nrow(data)) {
     

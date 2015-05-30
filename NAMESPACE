@@ -1,2 +1,2 @@
 exportPattern("^[[:alpha:]]+")
-import(lavaan)
+import(lavaan,tcltk)

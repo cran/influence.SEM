@@ -29,7 +29,7 @@ Additional parameters for \code{\link{sem}} function.
 %%  ~~ If necessary, more details than the description above ~~
 %}
 \value{
-Returns a vector of case influence.
+Returns a data.frame of case influence.
 }
 \references{
 Pek, J., MacCallum, R.C. (2011). Sensitivity Analysis in Structural Equation Models: Cases and Their Influence. \emph{Multivariate Behavioral Research}, 46, 202-228. 

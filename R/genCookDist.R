@@ -7,9 +7,9 @@ function(model,data,...) {
   LPT <- parTable(fit0)
   var.idx <- which(LPT$op=="~~" & LPT$lhs==LPT$rhs)
   
-  has.tcltk <- require("tcltk")
+  has.tcltk <- requireNamespace("tcltk")
   if (has.tcltk) 
-    pb <- tkProgressBar("", "Inspecting case ", 0, nrow(data))
+    pb <- tkProgressBar("genCookDist", "Inspecting case ", 0, nrow(data))
   
   for (i in 1:nrow(data)) {
     

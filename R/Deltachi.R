@@ -14,9 +14,9 @@ function(model,data,...,scaled=FALSE) {
   LPT <- parTable(fit0)
   var.idx <- which(LPT$op=="~~" & LPT$lhs==LPT$rhs)
   
-  has.tcltk <- require("tcltk")
+  has.tcltk <- requireNamespace("tcltk")
   if (has.tcltk) 
-    pb <- tkProgressBar("", "Inspecting case ", 
+    pb <- tkProgressBar("Deltachi", "Inspecting case ", 
                         0, nrow(data))
   
   if (scaled) {
