@@ -8,7 +8,8 @@ Explores case influence.
 It explores case influence. Cases with extreme values of the considered measure of influence are reported. Extreme values are determined using the boxplot criterion (Tukey, 1977) or user-defined cut-offs. Cases for which deletion leads to a model that does not converge or yelds a solution with negative estimated variances are also reported. In addition, explore.influence provides a graphical representation of case influence.
 }
 \usage{
-explore.influence(x, cut.offs = 'default', plot = 'TRUE', cook = 'FALSE')
+explore.influence(x, cut.offs = 'default', 
+                     plot = 'TRUE', cook = 'FALSE', ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -25,6 +26,9 @@ If \code{TRUE} (the default) a graphical representation of case influence is giv
   \item{cook}{
 If \code{TRUE}, \code{x} is interpreted as a vector containing Cook's distances, and so the lower cut-off is forced to be greater or equal to zero.
 }
+ \item{...}{
+   Additional parameters for \code{plot} function.
+ }
 }
 %\details{
 %%  ~~ If necessary, more details than the description above ~~

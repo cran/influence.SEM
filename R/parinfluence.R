@@ -36,12 +36,12 @@ function(parm,model,data,cook=FALSE,...) {
   
   has.tcltk <- requireNamespace("tcltk")
   if (has.tcltk) 
-    pb <- tkProgressBar("parinfluence", "Inspecting case ", 0, nrow(data))
+    pb <- tcltk::tkProgressBar("parinfluence", "Inspecting case ", 0, nrow(data))
     
   for (i in 1:nrow(data)) {
     
     if (has.tcltk) 
-      setTkProgressBar(pb, i, label = sprintf(paste("Inspecting case", i,"of",nrow(data))))
+      tcltk::setTkProgressBar(pb, i, label = sprintf(paste("Inspecting case", i,"of",nrow(data))))
     
     fit <- try(sem(model,data[-i,],...),TRUE)
     #fit <- try(sem(model,data=data[-i,]),TRUE)

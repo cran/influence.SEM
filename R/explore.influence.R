@@ -1,4 +1,4 @@
-explore.influence=function(x,cut.offs="default",plot=TRUE,cook=FALSE)
+explore.influence=function(x,cut.offs="default",plot=TRUE,cook=FALSE,...)
 {  
   # definizione cut-offs
   if ( (length(cut.offs) )==1 && (cut.offs=="default")){
@@ -19,7 +19,8 @@ explore.influence=function(x,cut.offs="default",plot=TRUE,cook=FALSE)
   if (cook==TRUE) cut.low=max(0,cut.low)
   # plot
   if (plot==TRUE) {
-    plot(x,xlab="observations",ylab="influence",ylim=c(min(cut.low,min(x,na.rm=TRUE)),max(cut.upp,max(x,na.rm=TRUE))))
+    plot(x,xlab="observations",ylab="influence",
+         ylim=c(min(cut.low,min(x,na.rm=TRUE)),max(cut.upp,max(x,na.rm=TRUE))),...)
     if (cook==FALSE) abline(h=cut.low,lty=2)
     if ((cook==TRUE) && (cut.low>0)) abline(h=cut.low,lty=2)
     abline(h=cut.upp,lty=2)  

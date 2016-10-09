@@ -16,7 +16,7 @@ function(model,data,...,scaled=FALSE) {
   
   has.tcltk <- requireNamespace("tcltk")
   if (has.tcltk) 
-    pb <- tkProgressBar("Deltachi", "Inspecting case ", 
+    pb <- tcltk::tkProgressBar("Deltachi", "Inspecting case ", 
                         0, nrow(data))
   
   if (scaled) {
@@ -28,7 +28,7 @@ function(model,data,...,scaled=FALSE) {
   for (i in 1:nrow(data)) {
     
     if (has.tcltk) 
-      setTkProgressBar(pb, i, label = 
+      tcltk::setTkProgressBar(pb, i, label = 
                         sprintf(paste("Inspecting case", i,"of",nrow(data))))
     
     fit <- try(sem(model,data[-i,],...),TRUE)
@@ -50,7 +50,7 @@ function(model,data,...,scaled=FALSE) {
   } 
   
   if (has.tcltk) close(pb)
-  return(Dchi)  
+  return(as.numeric(Dchi))
 }
 
 #fit0 <- sem(model,data=PDII)

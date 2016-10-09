@@ -32,7 +32,7 @@ Simulated data set from covariance matrix reported in Bollen (1989).
 %}
 \references{
 Bollen, K.A. (1989). \emph{Structural Equations with latent
-Variables}, Wiley, NY.
+Variables}. New York, NY: Wiley.
 }
 \examples{
 data(PDII)

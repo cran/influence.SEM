@@ -1,7 +1,13 @@
+  CHANGES IN influence.SEM VERSION 2.0
+
+CHANGES
+  * bugs fixed in functions which use tltck package
+  * changed output in function fitinfluence
+  * added internal function bollen.loglik
+
   CHANGES IN influence.SEM VERSION 1.5
 
 CHANGES
   * changed output in function fitinfluence
-
 
 

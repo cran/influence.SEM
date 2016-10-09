@@ -26,13 +26,17 @@ A data frame containing the observed variables used in the model. If any variabl
 Additional parameters for \code{\link{sem}} function.
 }
 }
-%\details{
-%%  ~~ If necessary, more details than the description above ~~
-%}
+\details{
+ The log-likelihoods \eqn{L(\hat{\mathbf{\theta}})} and \eqn{L(\hat{\mathbf{\theta}}_{(i)})} are computed by the function \code{\link{bollen.loglik}} using the formula 4B2 described by Bollen (1989, pag. 135).
+ 
+The likelihood distance gives the amount by which the log-likelihood of the full data changes if one were to evaluate it at the reduced-data estimates. The important point is that \eqn{L(\hat{\mathbf{\theta}}_{(i)})} is not the log-likelihood obtained by fitting the model to the reduced data set. It is obtained by evaluating the likelihood function based on the full data set (containing all \eqn{n} observations) at the reduced-data estimates (Schabenberger, 2005).}
 \value{
 Returns a vector of \eqn{LD_i}.
 }
 \references{
+Bollen, K.A. (1989). \emph{Structural Equations with latent
+Variables}. New York, NY: Wiley.
+
 Cook, R.D. (1977). Detection of influential observations in linear regression. \emph{Technometrics}, 19, 15-18. 
 
 Cook, R.D. (1986). Assessment of local influence. \emph{Journal of the Royal Statistical Society B}, 48, 133-169.
@@ -40,6 +44,8 @@ Cook, R.D. (1986). Assessment of local influence. \emph{Journal of the Royal Sta
 Cook, R.D., Weisberg, S. (1986). \emph{Residuals and influence in regressions.} New York, NY: Chapman & Hall.
 
 Pek, J., MacCallum, R.C. (2011). Sensitivity Analysis in Structural Equation Models: Cases and Their Influence. \emph{Multivariate Behavioral Research}, 46, 202-228. 
+
+Schabenberger, O. (2005). Mixed model influence diagnostics. In \emph{SUGI}, 29, 189-29. SAS institute Inc, Cary, NC. 
 }
 \author{
 Massimiliano Pastore, Gianmarco Altoe'
@@ -49,10 +55,9 @@ If for observation \eqn{i} model does not converge or yelds a solution with nega
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
-
-%\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-%}
+\seealso{
+ \code{\link{bollen.loglik}}
+}
 \examples{
 ## not run: this example take several minutes
 data("PDII")
