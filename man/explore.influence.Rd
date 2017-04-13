@@ -64,8 +64,9 @@ model <- "
 F1 =~ y1+y2+y3+y4
 "
 fit0 <- sem(model, data=PDII,std.lv=TRUE)
-gCD <- genCookDist(model,data=PDII,std.lv=TRUE)
-explore.influence(gCD,cook=TRUE)
+## not run
+# gCD <- genCookDist(model,data=PDII,std.lv=TRUE)
+# explore.influence(gCD,cook=TRUE)
 
 ##
 ## not run: this example take several minutes

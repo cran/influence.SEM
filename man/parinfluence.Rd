@@ -33,7 +33,7 @@ Additional parameters for \code{\link{sem}} function.
 %%  ~~ If necessary, more details than the description above ~~
 %}
 \value{
-Return a list: 
+Returns a list: 
 \item{gCD }{Generalized Cook's Distance, if \code{cook=TRUE}.}
 \item{Dparm }{Direction of change in parameter estimates.}
 \item{THi }{Parameter estimates.}

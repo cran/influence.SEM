@@ -1,6 +1,6 @@
-0c49f459c74c06ef53c4bf1a51d2d713 *DESCRIPTION
+32c381421a665017275fe90eabbee1ad *DESCRIPTION
 7b8701804448b14aa98c79fd6e359c7c *NAMESPACE
-d79d81af6adac3fd56e682b1d977e762 *NEWS
+a5e58cb7fcc3138fdb3ce96d9c1233f3 *NEWS
 fb7c463dd0d2e8d4010b5302b7c9769e *R/Deltachi.R
 23ff1163af60df58a1993c004c4475d3 *R/Likedist.R
 039edb4169048d1168f3a9990e8284cc *R/bollen.loglik.R
@@ -8,7 +8,10 @@ fb7c463dd0d2e8d4010b5302b7c9769e *R/Deltachi.R
 546d2e9c19f3ab9a3b2c20c2d4a4e422 *R/fitinfluence.R
 b3048cfcc4068ff64fa96d1d00b077ac *R/genCookDist.R
 aa0b11d5c48e42160ffcacdad8c88245 *R/influence.SEM.R
+6ab80057906cb353f0b2740a7a5fc239 *R/lat.fitres.R
+452e794148456ba04d1753be34755037 *R/obs.fitres.R
 ae36883aef4b16916e23d05eb1cfc736 *R/parinfluence.R
+b3144e2bff60f3648aabae8089703370 *R/sem.fitres.R
 eee22cefb92ec730b6c864aa79d464b6 *data/PDII.rda
 3d2b0a1c55c1599390a12694c51d6dd3 *data/Q.rda
 6e1319bcea5ef35622c72b7f1c70e5ee *man/Deltachi.Rd
@@ -16,7 +19,8 @@ f021cd070b9d5057a88fdafc59f62b0a *man/Likedist.Rd
 3e3d35412b08fd276c0790eecabec6e3 *man/PDII.Rd
 5ee49c8539c2225c156464a6c6b3f26d *man/Q.Rd
 055c1b662f8f072319b595c75daa3bc0 *man/bollen.loglik.Rd
-73c72fb867bf52ca1a3c4bc86016c46c *man/explore.influence.Rd
+4fa6add8b5f2354cc465556a5d787bd0 *man/explore.influence.Rd
 4e68bacb42443e61128b77eee413026c *man/fitinfluence.Rd
 366f5e15991fee7b3085ef752807203f *man/genCookDist.Rd
-f54d0d2cea7bfab538ce852fa6a40a0e *man/parinfluence.Rd
+810f96d4b50ec81a16eaa8fa7b281c3f *man/parinfluence.Rd
+fb28b24a36bffa28f3bebddfcb426da3 *man/sem.fitres.Rd
