@@ -1,3 +1,11 @@
+  CHANGES IN influence.SEM VERSION 2.2
+
+CHANGES
+  * changed functions Deltachi, fitinfluence, genCookDist, Likedist, in order to optimize the functions 
+
+CHANGES
+  * added function sem.fitres
+
   CHANGES IN influence.SEM VERSION 2.1
 
 CHANGES

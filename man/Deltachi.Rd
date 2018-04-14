@@ -76,14 +76,14 @@ model <- "
 
 # fit0 <- sem(model, data=PDII)
 # Dchi <- Deltachi(model,data=PDII)
-# plot(Dchi,pch=19,xlab="observations",ylab="Delta chisquare")
+# plot(Dchi,pch=19,xlab="observations",ylab="Delta chisquare",main="Deltachi function")
 
 ## the case that produces negative estimated variances
 # sem(model,data=PDII[-which(is.na(Dchi)),])
 
 ## same results 
-# Dchi <- fitinfluence("chisq",model,data=PDII)
-# plot(Dchi,pch=19,xlab="observations",ylab="Delta chisquare")
+# Dchi <- fitinfluence("chisq",model,data=PDII)$Dind$chisq
+# plot(Dchi,pch=19,xlab="observations",ylab="Delta chisquare",main="fitinfluence function")
 
 }
 \keyword{multivariate}

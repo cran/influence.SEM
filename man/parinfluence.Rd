@@ -36,7 +36,7 @@ Additional parameters for \code{\link{sem}} function.
 Returns a list: 
 \item{gCD }{Generalized Cook's Distance, if \code{cook=TRUE}.}
 \item{Dparm }{Direction of change in parameter estimates.}
-\item{THi }{Parameter estimates.}
+%\item{THi }{Parameter estimates.}
 }
 \references{
 Pek, J., MacCallum, R.C. (2011). Sensitivity Analysis in Structural Equation Models: Cases and Their Influence. \emph{Multivariate Behavioral Research}, 46, 202-228. 

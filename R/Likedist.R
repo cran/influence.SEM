@@ -1,6 +1,6 @@
 #rm(list=ls())
 #load("~/lavori/Rdevel/influence.SEM2.0/data/PDII.rda")
-#source('~/lavori/Rdevel/influence.SEM2.0/R/bollen.loglik.R')
+#source('~/lavori/Rdevel/influence.SEM2.2/R/bollen.loglik.R')
 #source('~/lavori/Rdevel/influence.SEM2.0/R/genCookDist.R')
 #model <- "
 #F1 =~ y1+y2+y3+y4
@@ -22,7 +22,8 @@ function(model,data,...) {
   if (has.tcltk) 
     pb <- tcltk::tkProgressBar("Likedist", "Inspecting case ", 0, nrow(data))
   
-  for (i in 1:nrow(data)) {
+  #for (i in 1:nrow(data)) {
+  LD <- sapply(1:nrow(data),function(i){  
     
     if (has.tcltk) 
       tcltk::setTkProgressBar(pb, i, label = sprintf(paste("Inspecting case", i,"of",nrow(data))))
@@ -30,17 +31,17 @@ function(model,data,...) {
     fit <- try(sem(model,data[-i,],...),TRUE)
     
     if (class(fit)=="try-error") {
-      LD <- c(LD,NA)
+      NA
     } else {
       if ((length(var.idx)>0L && any(fit@Fit@est[var.idx]<0))|(!fit@Fit@converged)) {
-        LD <- c(LD,NA)
+        NA
       } else {
         #Li <- logLik(fit)
         Li <- bollen.loglik(fit0@Data@nobs[[1]],S,fitted(fit)$cov)
-        LD <- c(LD,2*(L0-Li))              
+        2*(L0-Li)
       }
     }
-  } 
+  }) 
   
   if (has.tcltk) close(pb)
   return(LD)

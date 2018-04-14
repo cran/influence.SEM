@@ -1,15 +1,10 @@
-#rm(list=ls()); i <- 1
-#library(lavaan)
-#load("~/lavori/proveR/influence.SEM/data/jeff.rda")
-#model <- model00
-#data <- X
-#fit0 <- sem(model, data=data)
-#inspect(fit0,"rsquare")
-#parm <- PAR
+#rm(list=ls())
+#source("/home/el/lavori/Rdevel/influence.SEM/test.funzioni.R")
 
 parinfluence <-
 function(parm,model,data,cook=FALSE,...) {
   fit0 <- sem(model, data, ...)
+  #fit0 <- sem(model, data)
     
   (E <- parameterEstimates(fit0))
   (E$parm <- paste(E$lhs,E$op,E$rhs,sep=""))
@@ -38,8 +33,7 @@ function(parm,model,data,cook=FALSE,...) {
   if (has.tcltk) 
     pb <- tcltk::tkProgressBar("parinfluence", "Inspecting case ", 0, nrow(data))
     
-  for (i in 1:nrow(data)) {
-    
+  Dparm <- sapply(1:nrow(data),function(i){  
     if (has.tcltk) 
       tcltk::setTkProgressBar(pb, i, label = sprintf(paste("Inspecting case", i,"of",nrow(data))))
     
@@ -47,8 +41,7 @@ function(parm,model,data,cook=FALSE,...) {
     #fit <- try(sem(model,data=data[-i,]),TRUE)
     
     if (class(fit)=="try-error") {
-      Dparm <- rbind(Dparm,rep(NA,length(parm)))
-      THi <- rbind(THi,rep(NA,length(parm)))
+      rep(NA,length(parm))
     } else {
       
       (LPT <- parameterEstimates(fit))
@@ -60,13 +53,14 @@ function(parm,model,data,cook=FALSE,...) {
       
       if ((!fit@Fit@converged)|(length(var.idx)>0L && any(LPT$est[var.idx]<0))) {
         Dparm <- rbind(Dparm,rep(NA,length(parm)))
-        THi <- rbind(THi,LPT$est[LPT$parm%in%parm])
+        rep(NA,length(parm))
       } else {
         thi <- LPT$est[LPT$parm%in%parm]; THi <- rbind(THi,thi)
         S <- try(vcov(fit)[parmS,parmS],TRUE)
         
         if (class(S)=="try-error") {
           Dparm <- rbind(Dparm,rep(NA,length(parm)))
+          rep(NA,length(parm))
         } else {
           ## gestisce il caso parmS!=parm
           if (exists("S2")) {
@@ -78,26 +72,30 @@ function(parm,model,data,cook=FALSE,...) {
           } else {
             (S <- sqrt(S))  
           }
-          Di <- (th0-thi)/S
-          Dparm <- rbind(Dparm,Di)                
+          Dparm <- (th0-thi)/S
         }
       }
     }
-  }
+  })
   
   if (has.tcltk) close(pb)
-  
-  colnames(THi) <- colnames(Dparm) <- parm
+  Dparm <- t(Dparm)
   
   if (cook) {
     gCD <- Dparm^2
-    return(list(gCD=gCD,Dparm=Dparm,THi=THi))
+    return(list(gCD=gCD,Dparm=Dparm)) 
   } else {
-    return(list(Dparm=Dparm,THi=THi))
+    return(list(Dparm=Dparm)) 
   }
   
 }
 
-#data <- data.frame(lapply(data[,c("m1","m2","m3")],as.numeric))
-#(TH <- parinfluence(parm,model,data))
+
+#data("PDII",package="influence.SEM")
+#model <- "
+#  F1 =~ y1+y2+y3+y4
+#"
+#PAR <- c("F1=~y2","F1=~y3","F1=~y4")
+#TH <- parinfluence(PAR,model,data=PDII,ordered=colnames(PDII))
+#TH
 #Mpar <- parinfluence(PAR,model,X)

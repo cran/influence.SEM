@@ -25,11 +25,13 @@ function(model,data,...,scaled=FALSE) {
     Chi0 <- inspect(fit0,"fit")["chisq"]
   }
   Dchi <- NULL
-  for (i in 1:nrow(data)) {
+  #for (i in 1:nrow(data)) {
+  Dchi <- sapply(1:nrow(data),function(i){
     
-    if (has.tcltk) 
+    if (has.tcltk) {
       tcltk::setTkProgressBar(pb, i, label = 
-                        sprintf(paste("Inspecting case", i,"of",nrow(data))))
+                                sprintf(paste("Inspecting case", i,"of",nrow(data))))
+    }
     
     fit <- try(sem(model,data[-i,],...),TRUE)
     
@@ -44,10 +46,11 @@ function(model,data,...,scaled=FALSE) {
         } else {
           Chii <- inspect(fit,"fit")["chisq"]
         } 
-        Dchi <- c(Dchi,Chi0-Chii)      
+        #Dchi <- c(Dchi,Chi0-Chii)      
+        Chi0-Chii # Delta Chi
       }
     }
-  } 
+  }) 
   
   if (has.tcltk) close(pb)
   return(as.numeric(Dchi))

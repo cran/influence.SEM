@@ -55,9 +55,9 @@ model <- "
   F1 =~ y1+y2+y3+y4
 "
 
-## fit0 <- sem(model, data=PDII)
-## FI <- fitinfluence("cfi",model,data=PDII)
-## plot(FI$Dind,pch=19)
+# fit0 <- sem(model, data=PDII)
+# FI <- fitinfluence("cfi",model,data=PDII)
+# plot(FI$Dind,pch=19)
 
 ## not run: this example take several minutes
 ## an example in which the deletion of a case yelds a solution 
@@ -68,10 +68,10 @@ model <- "
   F3 =~ y5+y6+y7+y8
 "
 
-## fit0 <- sem(model, data=PDII)
-## FI <- fitinfluence(c("tli","rmsea"),model,PDII)
-## explore.influence(FI$Dind$tli)
-## explore.influence(FI$Dind$rmsea)
+# fit0 <- sem(model, data=PDII)
+# FI <- fitinfluence(c("tli","rmsea"),model,PDII)
+# explore.influence(FI$Dind$tli)
+# explore.influence(FI$Dind$rmsea)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
