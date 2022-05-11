@@ -38,7 +38,10 @@ Returns a vector of \eqn{\Delta_{\chi^2_i}}.
 \references{
 Pek, J., MacCallum, R.C. (2011). Sensitivity Analysis in Structural Equation Models: Cases and Their Influence. \emph{Multivariate Behavioral Research}, 46, 202-228.
 
-Rosseel, Y. (2013). The \code{lavaan} tutorial. URL: \url{http://lavaan.ugent.be/tutorial/tutorial.pdf}.
+Rosseel, Y. (2012). lavaan: An R Package for Structural Equation
+  Modeling. \emph{Journal of Statistical Software}, 48, 1-36.
+
+Rosseel, Y. (2022). The \code{lavaan} tutorial. URL: \url{https://lavaan.ugent.be/tutorial/}.
 }
 \author{
 Massimiliano Pastore

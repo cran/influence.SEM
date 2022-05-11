@@ -35,7 +35,7 @@ function(model,data,...,scaled=FALSE) {
     
     fit <- try(sem(model,data[-i,],...),TRUE)
     
-    if (class(fit)=="try-error") {
+    if (inherits(fit,"try-error")) {
       Dchi <- c(Dchi,NA)
     } else {  
       if ((length(var.idx)>0L && any(fit@Fit@est[var.idx]<0))|(!fit@Fit@converged)) {

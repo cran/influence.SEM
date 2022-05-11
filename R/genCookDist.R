@@ -11,14 +11,13 @@ function(model,data,...) {
   if (has.tcltk) 
     pb <- tcltk::tkProgressBar("genCookDist", "Inspecting case ", 0, nrow(data))
   
-  #for (i in 1:nrow(data)) {
   gCD <- sapply(1:nrow(data),function(i){  
     if (has.tcltk) 
       tcltk::setTkProgressBar(pb, i, label = sprintf(paste("Inspecting case", i,"of",nrow(data))))
     
     fit <- try(sem(model,data[-i,],...),TRUE)
     
-    if (class(fit)=="try-error") {
+    if (inherits(fit,"try-error")) {
       NA
     } else {
       if ((length(var.idx)>0L && any(fit@Fit@est[var.idx]<0))|(!fit@Fit@converged)) {
@@ -27,13 +26,13 @@ function(model,data,...) {
         thi <- coef(fit)[!grepl("|t",names(coef(fit)),fixed=TRUE)]
         S <- try(vcov(fit),TRUE)
         
-        if (class(S)[1]=="try-error") {
+        if (inherits(S,"try-error")) {
           NA
         } else {
           S <- solve(S[!grepl("|t",rownames(S),fixed=TRUE),
                        !grepl("|t",colnames(S),fixed=TRUE)])
           CDi <- t(th0-thi)%*%S%*%(th0-thi)
-          #gCD <- c(gCD,CDi)                  
+                  
         }
       }
     }

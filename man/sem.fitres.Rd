@@ -23,9 +23,7 @@ The functions \code{obs.fitres()} and \code{lat.fitres()} are internal functions
 }
 \value{
 Returns a data frame containing:
-\item{}{The observed model variables.}
-\item{}{The expected values on dependent variables (indicated with \code{hat.})}
-\item{}{The residuals on dependent variables (indicated with \code{e.})}
+1) The observed model variables; 2) The expected values on dependent variables (indicated with \code{hat.}); 3) The residuals on dependent variables (indicated with \code{e.})
 }
 %\references{
 %Bollen, K. A. (1989). \emph{Structural equations with latent variables}. New York: Wiley%.}

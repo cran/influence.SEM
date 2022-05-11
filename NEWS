@@ -1,3 +1,10 @@
+  CHANGES IN influence.SEM VERSION 2.3
+
+CHANGES
+  * changed sem.fitres.Rd file 
+  * changed statements if(class(fit)=="try-error") into (inherits(fit,"try-error"))
+  * changed url and updated references in Deltachi.Rd file
+
   CHANGES IN influence.SEM VERSION 2.2
 
 CHANGES

@@ -2,3 +2,4 @@ exportPattern("^[[:alpha:]]+")
 import(lavaan,tcltk)
 importFrom("graphics", "abline")
 importFrom("stats", "quantile")
+

@@ -22,16 +22,14 @@ fitinfluence <- function (index, model, data, ...)
   if (has.tcltk) 
     pb <- tcltk::tkProgressBar("fitinfluence", "Inspecting case ", 0, nrow(data))
   
-  #for (i in 1:nrow(data)) {
   Dind <- sapply(1:nrow(data),function(i){
     if (has.tcltk) {
       tcltk::setTkProgressBar(pb, i, label = sprintf(paste("Inspecting case", 
                                                            i, "of", nrow(data))))
     }
     fit <- try(sem(model, data[-i, ], ...), TRUE)
-    #fit <- try(sem(model, data[-i, ]), TRUE)
     
-    if (class(fit) == "try-error") {
+    if (inherits(fit,"try-error")) {
       if (length(index)==1) {
         NA
       } else {

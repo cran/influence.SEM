@@ -38,9 +38,8 @@ function(parm,model,data,cook=FALSE,...) {
       tcltk::setTkProgressBar(pb, i, label = sprintf(paste("Inspecting case", i,"of",nrow(data))))
     
     fit <- try(sem(model,data[-i,],...),TRUE)
-    #fit <- try(sem(model,data=data[-i,]),TRUE)
     
-    if (class(fit)=="try-error") {
+    if (inherits(fit,"try-error")) {
       rep(NA,length(parm))
     } else {
       
@@ -58,7 +57,7 @@ function(parm,model,data,cook=FALSE,...) {
         thi <- LPT$est[LPT$parm%in%parm]; THi <- rbind(THi,thi)
         S <- try(vcov(fit)[parmS,parmS],TRUE)
         
-        if (class(S)=="try-error") {
+        if (inherits(S,"try-error")) {
           Dparm <- rbind(Dparm,rep(NA,length(parm)))
           rep(NA,length(parm))
         } else {
